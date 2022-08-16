@@ -22,10 +22,12 @@ function App() {
     setTodos(todos.concat(newTodo));
   }
   const completeTodo = async todoId => {
-    //..
+    const response = await axios.put(`/todos/${todoId}`);
+    setTodos(response.data);
   }
   const deleteTodo = async todoId => {
-    //..
+    const response = await axios.delete(`/todos/${todoId}`);
+      setTodos(response.data);
   }
 
   return (
