@@ -1,24 +1,43 @@
-import logo from './logo.svg';
+import { useState, useEffect } from 'react';
+import axios from 'axios';
+import { NewTodoForm } from './NewTodoForm';
+import { TodoList } from './TodoList';
+
 import './App.css';
 
 function App() {
+  const [todos, setTodos] = useState([]);
+
+  useEffect(() => {
+    const loadTodos = async () => {
+      const response = await axios.get('/todos');
+      setTodos(response.data);
+    }
+    loadTodos();
+  }, []);
+
+  const createTodo = async todoText => {
+    const response = await axios.post('/todos', { newTodoText: todoText });
+    const newTodo = response.data;
+    setTodos(todos.concat(newTodo));
+  }
+  const completeTodo = async todoId => {
+    //..
+  }
+  const deleteTodo = async todoId => {
+    //..
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+      <div>
+        <h1>My Todos</h1>
+        <NewTodoForm onClickCreate={createTodo} />
+        <TodoList
+            todos={todos}
+            onCompleteTodo={completeTodo}
+            onDeleteTodo={deleteTodo}
+        />
+      </div>
   );
 }
 
