@@ -5,7 +5,7 @@ export const TodoList = ({ todos, onCompleteTodo, onDeleteTodo }) => {
         <div>
             {todos.map(todo => (
                 <TodoListItem
-                    key={todo.id}
+                    key={todo._id}
                     todo={todo}
                     onClickComplete={onCompleteTodo}
                     onClickDelete={onDeleteTodo} />
